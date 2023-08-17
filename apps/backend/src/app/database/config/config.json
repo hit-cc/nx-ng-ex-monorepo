@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "nx_ng_ex_monorepo",
+    "password": "nx_ng_ex_monorepo@123",
+    "database": "nx_ng_ex_monorepo",
+    "host": "127.0.0.1",
+    "dialect": "mongodb"
+  },
+  "staging": {
+    "username": "xxxx",
+    "password": "xxxxx",
+    "database": "nx_ng_ex_monorepo_staging",
+    "host": "xxxxxxx",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "xxxxxx",
+    "password": "xxxxx",
+    "database": "nx_ng_ex_monorepo_production",
+    "host": "xxxxxx",
+    "dialect": "mysql"
+  }
+}
