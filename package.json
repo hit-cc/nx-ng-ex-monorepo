@@ -2,7 +2,11 @@
   "name": "@nx-ng-exp-monorepo/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "backend": "npx nx run backend:serve --port 4400",
+    "angular-app": "npx nx run angular-app:serve --port 4401",
+    "react-app": "npx nx run react-app:serve --port 4402"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~16.2.0",
@@ -20,8 +24,10 @@
     "axios": "^1.4.0",
     "express": "^4.18.2",
     "mongoose": "^7.4.3",
+    "nodemon": "^3.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-router-dom": "6.11.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

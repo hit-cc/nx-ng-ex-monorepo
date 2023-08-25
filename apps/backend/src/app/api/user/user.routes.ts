@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import UserController from './controller/user.controller';
-class userRoutes {
+import UserController from './user.controller';
+class UserRoutes {
   public router = Router();
   public controller = new UserController();
 
@@ -16,4 +16,4 @@ class userRoutes {
   }
 }
 
-export default userRoutes;
+export default UserRoutes;

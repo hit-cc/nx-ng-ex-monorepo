@@ -1,32 +1,34 @@
 import express, { Application, Request, Response } from 'express';
 import * as path from 'path';
-import MongoDBConnection from './app/database/models/mongoConnection';
-import mongoose, { connect, set } from 'mongoose';
+import * as bodyParser from 'body-parser';
+import MongoDbConnection from './app/database/models/mongoConnection';
 import UserRoutes from './app/api/user/user.routes';
-
+import env from './environment';
 class App {
   private app: Application;
-  private port: string | number;
-  private dbConnection: MongoDBConnection;
+  private PORT = env.getPort();
+  private MONGO_URL = env.getMongoUrl();
+  private dbConnection: MongoDbConnection;
   private userRoutes = new UserRoutes();
-  mongoURI =
-    'mongodb+srv://cccmongodb:ccc1_mongodb@cc-cluster.tyb3i.mongodb.net/nx_ng_ex_monorepo'; // Update with your MongoDB URI
+
   constructor() {
     this.app = express();
-    this.port = process.env.PORT || 3333;
-
-    this.connectToDatabase();
-    this.startServer();
+    this.basicConfig();
     this.configureMiddlewares();
     this.configureRoutes();
+    this.connectToDatabase();
+    this.startServer();
   }
 
+  private basicConfig() {
+    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.urlencoded({ extended: false }));
+  }
   private configureMiddlewares() {
     this.app.use('/assets', express.static(path.join(__dirname, 'assets')));
   }
 
   private configureRoutes() {
-    // this.app.use('/api/user', this._userRoutes.router);
     this.app.get('/api', (req: Request, res: Response) => {
       res.send({ message: 'Welcome to backend!' });
     });
@@ -34,21 +36,17 @@ class App {
     this.app.use('/api', this.userRoutes.router);
   }
 
+  private async connectToDatabase() {
+    this.dbConnection = new MongoDbConnection();
+    await this.dbConnection.connect(this.MONGO_URL);
+  }
+
   private startServer() {
-    const server = this.app.listen(this.port, () => {
-      console.log(`Listening at http://localhost:${this.port}/api`);
+    const server = this.app.listen(this.PORT, () => {
+      console.log(`Listening at http://localhost:${this.PORT}/api`);
     });
 
     server.on('error', console.error);
-  }
-
-  private async connectToDatabase() {
-    try {
-      await mongoose.connect(this.mongoURI, {});
-      console.log('Connected to MongoDB');
-    } catch (error) {
-      console.error('Error connecting to MongoDB:', error);
-    }
   }
 }
 

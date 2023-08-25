@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
-import UserService from '../services/user.service';
+import UserService from './user.service';
 
 class UserController {
   public UserService = new UserService();
   constructor() {
-    console.log('UserController call');
+    console.log('I am here UserController');
   }
   public createUser = async (
     req: Request,
@@ -51,9 +51,11 @@ class UserController {
     try {
       this.UserService._updateUser(req.body)
         .then((response) => {
+          console.log('Response', response);
           return res.status(200).json({ data: response });
         })
         .catch((err) => {
+          console.log('Response err', err);
           next(err);
           return res.status(500).json({ error: err });
         });
